@@ -1,0 +1,185 @@
+{% load static %}
+
+<!-- The home page -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>GeneVis/Home</title>
+
+    <!-- Bootstrap CSS, needed for the Bootstrap formatting -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+
+    <!-- JQuery CDN -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Boostrap JS -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="./../../static/Cooccurrences/index_style.css"
+    />
+    <link rel="shortcut icon" href="{% static 'chat.jpg' %}" />
+
+  </head>
+
+  <body>
+    <!-- NAVBAR : -->
+    <nav class="navbar navbar-expand-lg navbar-info bg-info">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}"><b>GeneVis</b></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'request' %}"
+                >Make a query <span class="sr-only">(current)</span></a
+              >
+            </li>
+          </ul>
+        </div>
+        <center><img src="{% static 'logo.png' %}" alt="Logo" height="50"></center>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="navbar-link" href="{% url 'about' %}"
+                >About <span class="sr-only">(current)</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- Site infos-->
+
+    <center><div class="container"></div>
+      <div class="row mt-4">
+        <div class="col-md-1"></div>
+        <div class="card" id="first">
+          <div class="card-header bg-success text-white">
+            Informations about this site :
+          </div>
+          <div class="card-body">
+            <p>
+              The goal of this website is to allow you to find co-occurences
+              between two biological entities.
+              <br />
+              Biological entities can be species, cellular types, mutations,
+              histones modifications, genes, enzymes...
+              <br />
+              In order to make your query you have to click on the corresponding
+              button in the navbar.
+              <br />
+              Your query will be directed against the site's database, which
+              structure is explained down below.
+            </p>
+          </div>
+        </div>
+      </div></center>
+
+    <!-- Database Infos -->
+    
+    <div class="container"></div>
+    <div class="row mt-4">
+      <div class="col-md-1"></div>
+      <div class="card" id="third">
+        <div class="card-header bg-success text-white">
+          Informations about the database :
+        </div>
+        <div class="card-body">
+          <h1>
+            This site is based on the GeneView database (2018), most tables
+            contain these 3 collumns to conduct your research:
+          </h1>
+          <h2>
+            <u><b>pmid :</b></u>
+            <br />
+            the PubMed identifier of the article the biological entity appears.
+            <br />
+            <b><u>entity :</u></b>
+            <br />
+            the name of the biological entity, be careful about these names as
+            biological entities may have many names, such as "Gamma-glutamyl
+            transpeptidase" can be refered as "gamma-GT".
+            <br />
+            <u><b>normalized :</b></u>
+            <br />
+            this field can come in handy to manage entities in the above cases.
+            This field contains the normalized denomination for biological
+            entities,
+            <br />
+            so both the "gamma-GT" and "Gamma-glutamyl transpeptidase" share the
+            normalized name of "2678".
+            <br />
+            <br />
+            Pictures of database tables are available in the "Make a query" web
+            page for a visual understanding of the matter.
+          </h2>
+
+          <hr />
+          <center>
+          <b>Abbreviations :</b> This table contains both the full name of the
+          biological entity and its abbreviations.
+          <br />
+          <b>Cell :</b> Use this table if you wish to look for a specific
+          cellular type.
+          <br />
+          <b>Chemicals :</b> This table contains chemical compounds.
+          <br />
+          <b>Dates :</b> This table contains the dates of publication of each
+          article in the database.
+          <br />
+          <b>Disease :</b> This table contains the name of diseases as well as
+          symptoms (e.g. nausea).
+          <br />
+          <b>Enzyme :</b> Use this table if you wish to look for a specific
+          enzyme.
+          <br />
+          <b>Genes :</b> Use this table if you wish to look for a specific gene.
+          <br />
+          <b>Histones :</b> Use this table if you wish to find histone
+          modifications.
+          <br />
+          <b>Mutations :</b> This table contains any type of mutation mentionned
+          in the articles withing GeneView.
+          <br />
+          <b>Species :</b> Use this table if you are looking for a specific
+          specie.
+          <br />
+          <b>Tissue :</b> Use this table if you are looking for a specific
+          tissue.
+        </div></center>
+      </div>
+    </div>
+
+    <!--Database table pictures :-->
+  </body>
+</html>

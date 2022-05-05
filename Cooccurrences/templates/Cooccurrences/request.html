@@ -1,0 +1,361 @@
+{% load static %}
+
+<!-- This is the web page used to make queries -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>GeneVis/Query</title>
+
+    <!-- Bootstrap CSS, needed for the Bootstrap formatting -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+
+    <!-- JQuery CDN -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Boostrap JS -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'Cooccurrences/request_style.css' %}" />
+    <link rel="shortcut icon" href="{% static 'logo.png' %}" />
+
+  </head>
+
+  <body>
+    <!-- NAVBAR : -->
+    <nav class="navbar navbar-expand-lg navbar-info bg-info">
+      <div class="container">
+        <a class="navbar-brand text-white" href="{% url 'index' %}">GeneVis</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link text-white" href="{% url 'request' %}"
+                >Make a query <span class="sr-only">(current)</span></a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link text-white" href="{% url 'about' %}"
+                >About <span class="sr-only">(current)</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!--END NAVBAR-->
+
+    <!--Input Card -->
+    <div class="row my-4">
+      <div class="col-md-4">
+        <div class="card" id="input_card">
+          <div class="card-header bg-success text-white">Make your query :</div>
+          <div class="card-body">
+            <form action="{% url 'result' %}" method="GET">
+              <div class="form-group">
+                <label for="Source entity">Source</label>
+                <input
+                  class="form-control"
+                  id="Source entity"
+                  type="text"
+                  name="Source entity"
+                />
+                <div class="form-group" id="choice">
+                  <label for="inputState">Table to search to :</label>
+                  <select id="inputState" class="form-control" name="t1">
+                    <option>abbreviations</option>
+                    <option>cells</option>
+                    <option>chemicals</option>
+                    <option>dates</option>
+                    <option>diseases</option>
+                    <option>enzymes</option>
+                    <option>genes</option>
+                    <option>histones</option>
+                    <option>mutations</option>
+                    <option>species</option>
+                    <option>tissues</option>
+                  </select>
+                <div class="form-group">
+                  <label for="inputState" id="f1">Field the entity belongs to :</label>
+                  <select id="inputState" class="form-control" name="f1">
+                    <option>pmid</option>
+                    <option>normalized</option>
+                    <option>entity</option>
+                    <option>pubYear</option>
+                    <option>pubMonth</option>
+                    <option>pubDay</option>
+                  </select>
+                </div>
+              </div>
+              <hr>
+              <div class="form-group">
+                <label for="Target entity">Target</label>
+                <input type="text" class="form-control" name="Target entity" />
+              </div>
+              <div class="form-group">
+                <label for="inputState">Table to search to :</label>
+                <select id="inputState" class="form-control" name="t2">
+                  <option>abbreviations</option>
+                  <option>cells</option>
+                  <option>chemicals</option>
+                  <option>dates</option>
+                  <option>diseases</option>
+                  <option>enzymes</option>
+                  <option>genes</option>
+                  <option>histones</option>
+                  <option>mutations</option>
+                  <option>species</option>
+                  <option>tissues</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="inputState">Field the entity belongs to :</label>
+                <select id="inputState" class="form-control" name="f2">
+                  <option>pmid</option>
+                  <option>normalized</option>
+                  <option>entity</option>
+                  <option>pubYear</option>
+                  <option>pubMonth</option>
+                  <option>pubDay</option>
+                </select>
+              </div>
+              <input
+                class="btn btn-success btn-block"
+                type="submit"
+                value="Find co-occurences"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--END INPUTCARD-->
+
+    <!--Database table pictures
+        This carousel and the one in error.html are the same besides img link
+    :-->
+    <div
+      id="carousel"
+      class="carousel"
+      data-ride="carousel"
+      data-interval="0"
+    >
+      <ol class="carousel-indicators">
+        <li data-taget="#carousel" data-slide-to="0" class="active"></li>
+        <li data-taget="#carousel" data-slide-to="1"></li>
+        <li data-taget="#carousel" data-slide-to="2"></li>
+        <li data-taget="#carousel" data-slide-to="3"></li>
+        <li data-taget="#carousel" data-slide-to="4"></li>
+        <li data-taget="#carousel" data-slide-to="5"></li>
+        <li data-taget="#carousel" data-slide-to="6"></li>
+        <li data-taget="#carousel" data-slide-to="7"></li>
+        <li data-taget="#carousel" data-slide-to="8"></li>
+        <li data-taget="#carousel" data-slide-to="9"></li>
+        <li data-taget="#carousel" data-slide-to="10"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="card" id="carousel-card">
+            <div class="card-header bg-success text-white text-center">
+              Abbreviations
+            </div>
+            <div class="card-body">
+              <img
+                class="d-block"
+                src="../static/Cooccurrences/images/Abbreviation_Table.PNG"
+                alt="Strucutre of the abbreviation table."
+              />
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card" id="carousel-card">
+            <div class="card-header bg-success text-white text-center">
+              Cells
+            </div>
+            <div class="card-body">
+              <img
+                class="d-block"
+                src="../static/Cooccurrences/images/Cells_Table.PNG"
+                alt="Strucutre of the cells table."
+              />
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card" id="carousel-card">
+            <div class="card-header bg-success text-white text-center">
+              Chemicals
+            </div>
+            <div class="card-body">
+              <img
+                class="d-block"
+                src="../static/Cooccurrences/images/Chemicals_Table.PNG"
+                alt="Strucutre of the chemicals table."
+              />
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card" id="carousel-card">
+            <div class="card-header bg-success text-white text-center">
+              Dates
+            </div>
+            <div class="card-body">
+              <img
+                class="d-block"
+                src="../static/Cooccurrences/images/Dates_Table.PNG"
+                alt="Strucutre of the dates table."
+              />
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card" id="carousel-card">
+            <div class="card-header bg-success text-white text-center">
+              Diseases
+            </div>
+            <div class="card-body">
+              <img
+                class="d-block"
+                src="../static/Cooccurrences/images/Diseases_Table.PNG"
+                alt="Strucutre of the diseases table."
+              />
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card" id="carousel-card">
+            <div class="card-header bg-success text-white text-center">
+              Enzymes
+            </div>
+            <div class="card-body">
+              <img
+                class="d-block"
+                src="../static/Cooccurrences/images/Enzymes_Table.PNG"
+                alt="Strucutre of the enzymes table."
+              />
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card" id="carousel-card">
+            <div class="card-header bg-success text-white text-center">
+              Genes
+            </div>
+            <div class="card-body">
+              <img
+                class="d-block"
+                src="../static/Cooccurrences/images/Genes_Table.PNG"
+                alt="Strucutre of the genes table."
+              />
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card" id="carousel-card">
+            <div class="card-header bg-success text-white text-center">
+              Histones
+            </div>
+            <div class="card-body">
+              <img
+                class="d-block"
+                src="../static/Cooccurrences/images/Histones_Table.PNG"
+                alt="Strucutre of the histones table."
+              />
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card" id="carousel-card">
+            <div class="card-header bg-success text-white text-center">
+              Mutations
+            </div>
+            <div class="card-body">
+              <img
+                class="d-block"
+                src="../static/Cooccurrences/images/Mutations_Table.PNG"
+                alt="Strucutre of the mutations table."
+              />
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card" id="carousel-card">
+            <div class="card-header bg-success text-white text-center">
+              Species
+            </div>
+            <div class="card-body">
+              <img 
+                class="d-block"
+                src="../static/Cooccurrences/images/Species_Table.PNG"
+                alt="Strucutre of the species table.">
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card" id="carousel-card">
+            <div class="card-header bg-success text-white text-center">
+              Tissues
+            </div>
+            <div class="card-body">
+              <img
+                class="d-block"
+                src="../static/Cooccurrences/images/Tissues_Table.PNG"
+                alt="Strucutre of the tissues table."
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <a
+        class="carousel-control-prev"
+        href="#carousel"
+        role="button"
+        data-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a
+        class="carousel-control-next"
+        href="#carousel"
+        role="button"
+        data-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </body>
+</html>

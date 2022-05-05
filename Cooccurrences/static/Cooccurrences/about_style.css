@@ -1,0 +1,17 @@
+.card {
+  width: 50%;
+  margin: auto;
+  margin-top: 100px;
+  background: antiquewhite;
+}
+
+.card-header p {
+  font-size: 150%;
+  font-weight: 500;
+}
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: antiquewhite;
+}

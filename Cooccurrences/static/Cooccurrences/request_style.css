@@ -1,0 +1,63 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+#carousel {
+  width: 50%;
+  margin: auto;
+  margin-top: -600px;
+  margin-left: 35%;
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='grey' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='grey' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+}
+
+.carousel-item img {
+  margin: auto;
+}
+
+.carousel-indicators {
+  background-color: rgba(128, 128, 128, 0.479);
+  margin-bottom: auto;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.card-img-top {
+  width: 40%;
+  height: 10%;
+  object-fit: cover;
+}
+
+#carousel-info {
+  width: 700px;
+  margin: auto;
+}
+
+.carousel-item #carousel-card {
+  width: 700px;
+  margin: auto;
+}
+
+#input_card {
+  margin-left: 15%;
+}
+
+hr {
+  background-color: black;
+}
+
+#f1 {
+  margin-top: 15px;
+}
+
+#choice {
+  margin-top: 18px;
+}

@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>GeneVis/Results</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <style>
+      hr.final {
+        background: black;
+      }
+    </style>
+
+    <link rel="shortcut icon" href="{% static 'logo.png' %}" />
+
+  </head>
+
+  <body>
+    <!-- Navbar : -->
+    <nav class="navbar navbar-expand-lg navbar-info bg-info">
+      <div class="container">
+        <a class="navbar-brand text-white" href="{% url 'index' %}">GeneVis</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link text-white" href="{% url 'request' %}"
+                >Make a query <span class="sr-only">(current)</span></a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link text-white" href="{% url 'about' %}"
+                >About <span class="sr-only">(current)</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Result card -->
+    <div class="container"></div>
+    <div class="row mt-4">
+      <div class="col-md-1"></div>
+      <div class="card">
+        <div class="card-header bg-success text-white">Matching articles :</div>
+        <div class="card-body">
+          <!-- Loop to display results -->
+          somme = 0  
+          {% for match in matches %}
+            somme +=1
+          {% endfor %}
+          somme
+
+          {% for result in results %}
+            <p>Result n° {{forloop.counter}} :</p>
+            <hr />
+            <th scope="row">
+              {{ result }}
+              <br />
+              <!-- Loop to display the matches of the results -->
+              {% for match in matches %}
+              <!-- As dates has different fiel names than other tables a chek is made in order to adapt the text displayed -->
+              {% if result.pmid == match.pmid and result.id == forloop.counter and is_date == 1 %}
+              <p><b>matching with :</b> pubYear = {{match.pubyear}}  |  pubMonth = {{match.pubmonth}} </p>
+              <!-- Other tables share the same field names that are practical to use, a simple else is enough -->
+              {% else %}
+              {% if result.pmid == match.pmid and result.id == forloop.counter %}
+              <p><b>matching with :</b> entity = {{match.entity}}  |  normalized = {{match.normalized}} </p>
+              {% endif %}
+              {% endif %}
+              {% endfor %}
+              <!--ending matches-->
+              <!-- Building the link the pubmed article -->
+              <div class="vertical"></div>
+              <a
+                href="https://pubmed.ncbi.nlm.nih.gov/{{result.pmid}}/"
+                target="_blank"
+                >Link to PubMed
+              </a>
+              <hr class="final" />
+              <!-- Display this message in case the forloop key is empty, which means no co-occurence-->
+              {% empty %}
+              <p>There is no co-occurence for this query.</p>
+            {% endfor %}
+            </th>
+          </tr>
+          <hr />
+          <th scope="row"></th>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
